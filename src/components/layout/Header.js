@@ -32,11 +32,17 @@ import {
   StarOutlined,
   TwitterOutlined,
   FacebookFilled,
+  LoginOutlined,
+  QuestionCircleOutlined
 } from "@ant-design/icons";
 
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import actions from '../../redux/user/action'
+import ModalChangePass from "./ModalChangePass";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -267,6 +273,16 @@ function Header({
 
   const showDrawer = () => setVisible(true);
   const hideDrawer = () => setVisible(false);
+  const dispatch=useDispatch()
+  const history=useHistory()
+  const handleSignIn=()=>{
+        
+  }
+  const handleLogOut=()=>{
+      dispatch(actions.logout())
+        history.push('/sign-in')
+  }
+  const NameUser=useSelector(state=>state.userReducer)
 
   return (
     <>
@@ -304,6 +320,8 @@ function Header({
               </a>
             </Dropdown>
           </Badge>
+          
+          
           <Button type="link" onClick={showDrawer}>
             {logsetting}
           </Button>
@@ -325,9 +343,17 @@ function Header({
             <div layout="vertical">
               <div className="header-top">
                 <Title level={4}>
-                  Configurator
-                  <Text className="subtitle">See our dashboard options.</Text>
+                Cài đặt
+                  <Text className="subtitle"></Text>
                 </Title>
+              </div>
+              <div >
+              <Button icon={<LoginOutlined />} type="" onClick={handleLogOut}>
+                Đăng xuất
+              </Button>
+              <ModalChangePass />
+              {/* <Title level={5} ><QuestionCircleOutlined style={{marginRight:'10px'}} />Đổi mật khẩu</Title> */}
+              
               </div>
 
               <div className="sidebar-color">
@@ -421,10 +447,11 @@ function Header({
               </div>
             </div>
           </Drawer>
-          <Link to="/sign-in" className="btn-sign-in">
+          <p  onClick={handleSignIn} className="btn-sign-in">
             {profile}
-            <span>Sign in</span>
-          </Link>
+            {NameUser.isLogin?(<span>{NameUser.data.name}</span>):(<span>Đăng nhập</span>)}
+            
+          </p>
           <Input
             className="header-search"
             placeholder="Type here..."

@@ -29,6 +29,7 @@ import {
   MenuUnfoldOutlined,
   RightOutlined,
 } from "@ant-design/icons";
+import withAuth from "../components/withAuth/withAuth";
 import Paragraph from "antd/lib/typography/Paragraph";
 
 import Echart from "../components/chart/EChart";
@@ -46,7 +47,7 @@ import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
 
-function Home() {
+function Home(props) {
   const { Title, Text } = Typography;
 
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
@@ -558,4 +559,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Home);
